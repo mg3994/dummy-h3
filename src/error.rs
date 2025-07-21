@@ -5,6 +5,50 @@ use std::fmt;
 /// Result type alias for H3 operations.
 pub type H3Result<T> = Result<T, H3Error>;
 
+/// Network-related errors
+#[derive(Debug, thiserror::Error)]
+pub enum NetworkError {
+    /// I/O error
+    #[error("I/O error: {0}")]
+    IoError(std::io::Error),
+    
+    /// Address resolution failed
+    #[error("Failed to resolve address")]
+    AddressResolutionFailed,
+    
+    /// Connection refused
+    #[error("Connection refused")]
+    ConnectionRefused,
+    
+    /// Connection reset
+    #[error("Connection reset")]
+    ConnectionReset,
+    
+    /// Connection timed out
+    #[error("Connection timed out")]
+    ConnectionTimeout,
+    
+    /// Network unreachable
+    #[error("Network unreachable")]
+    NetworkUnreachable,
+    
+    /// Operation not supported
+    #[error("Operation not supported: {0}")]
+    OperationNotSupported(String),
+    
+    /// Permission denied
+    #[error("Permission denied")]
+    PermissionDenied,
+    
+    /// Address already in use
+    #[error("Address already in use")]
+    AddressInUse,
+    
+    /// Other network error
+    #[error("Network error: {0}")]
+    Other(String),
+}
+
 /// Main error type for H3 operations.
 #[derive(Debug, thiserror::Error)]
 pub enum H3Error {
@@ -27,6 +71,10 @@ pub enum H3Error {
     /// TLS/Crypto errors
     #[error("TLS error: {0}")]
     Tls(#[from] TlsError),
+    
+    /// Network-related errors
+    #[error("Network error: {0}")]
+    Network(#[from] NetworkError),
     
     /// Timeout errors
     #[error("Operation timed out")]

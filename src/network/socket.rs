@@ -432,7 +432,6 @@ impl UdpSocket {
         }
     }
 }
-}
 
 #[cfg(test)]
 mod tests {
@@ -536,7 +535,7 @@ mod tests {
             assert_eq!(bytes_read, 0);
         }
         
-        #[cfg(target_family = "wasm"))]
+        #[cfg(target_family = "wasm")]
         {
             // In WASI mode, we simulate receiving 1 byte
             assert_eq!(bytes_read, 1);
