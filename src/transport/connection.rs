@@ -197,7 +197,7 @@ impl QuicConnection {
             priority: config.stream_config.priority,
             enable_flow_control: true,
         };
-        
+
         let stream_manager =
             crate::protocol::stream::StreamManager::new(protocol_stream_config, is_client);
 
@@ -227,7 +227,8 @@ impl QuicConnection {
         if is_client {
             let server_name = remote_addr.ip().to_string();
             let tls_session = TlsSession::new_client(config.tls_config.clone(), &server_name)?;
-            let packet_protection = PacketProtection::new(tls_session, connection.local_connection_id, true)?;
+            let packet_protection =
+                PacketProtection::new(tls_session, connection.local_connection_id, true)?;
             connection.packet_protection = Some(packet_protection);
         }
 
