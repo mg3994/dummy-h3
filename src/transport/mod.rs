@@ -2,9 +2,11 @@
 
 pub mod connection;
 pub mod endpoint;
+pub mod packet;
 
-pub use connection::{QuicConnection, ConnectionConfig};
+pub use connection::{QuicConnection, ConnectionConfig, ConnectionId, PacketType};
 pub use endpoint::{Endpoint, QuicListener};
+pub use packet::{Packet, PacketHeader, AckFrame, AckTracker, LossDetector};
 
 /// QUIC stream representation.
 #[derive(Debug)]

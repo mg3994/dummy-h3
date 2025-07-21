@@ -49,6 +49,38 @@ pub enum NetworkError {
     Other(String),
 }
 
+/// Transport-related errors
+#[derive(Debug, thiserror::Error)]
+pub enum TransportError {
+    /// Invalid packet format
+    #[error("Invalid packet: {0}")]
+    InvalidPacket(String),
+    
+    /// Invalid frame format
+    #[error("Invalid frame: {0}")]
+    InvalidFrame(String),
+    
+    /// Packet loss
+    #[error("Packet loss")]
+    PacketLoss,
+    
+    /// Packet reordering
+    #[error("Packet reordering")]
+    PacketReordering,
+    
+    /// Congestion control
+    #[error("Congestion control: {0}")]
+    CongestionControl(String),
+    
+    /// Flow control
+    #[error("Flow control: {0}")]
+    FlowControl(String),
+    
+    /// Other transport error
+    #[error("Transport error: {0}")]
+    Other(String),
+}
+
 /// Main error type for H3 operations.
 #[derive(Debug, thiserror::Error)]
 pub enum H3Error {
@@ -71,6 +103,10 @@ pub enum H3Error {
     /// TLS/Crypto errors
     #[error("TLS error: {0}")]
     Tls(#[from] TlsError),
+    
+    /// Transport-related errors
+    #[error("Transport error: {0}")]
+    Transport(#[from] TransportError),
     
     /// Network-related errors
     #[error("Network error: {0}")]

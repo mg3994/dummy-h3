@@ -36,6 +36,7 @@ pub mod transport;
 pub mod network;
 pub mod error;
 pub mod config;
+pub mod crypto;
 
 // Re-export main types for convenience
 pub use client::H3Client;
